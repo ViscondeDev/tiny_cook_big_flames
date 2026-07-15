@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bbv6s4cukl8n6"]
+
+[ext_resource type="Script" uid="uid://2s4ty156xpvx" path="res://scenes/chef/chef.gd" id="1_5yt76"]
+[ext_resource type="Texture2D" uid="uid://b0tpg0v0s8w1g" path="res://icon.svg" id="2_70a8x"]
+[ext_resource type="Script" uid="uid://do1xcx3vktr1b" path="res://share/movement.gd" id="3_tcv5e"]
+[ext_resource type="Script" uid="uid://7cvetaxggjx8" path="res://share/input_component.gd" id="4_qotaa"]
+[ext_resource type="Script" uid="uid://kg5b2n87modc" path="res://scenes/chef/flame_thrower.gd" id="5_70a8x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uwoax"]
+size = Vector2(32, 32)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uxwkn"]
+particle_flag_disable_z = true
+initial_velocity_min = 731.95
+initial_velocity_max = 845.36
+gravity = Vector3(0, 0, 0)
+
+[node name="Chef" type="CharacterBody2D" unique_id=931864157]
+script = ExtResource("1_5yt76")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1464344227]
+unique_name_in_owner = true
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_70a8x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=431255304]
+shape = SubResource("RectangleShape2D_uwoax")
+
+[node name="MovementComponent" type="Node" parent="." unique_id=365017994 node_paths=PackedStringArray("body")]
+unique_name_in_owner = true
+script = ExtResource("3_tcv5e")
+body = NodePath("..")
+drag_in_seconds = 0.2
+
+[node name="InputManager" type="Node" parent="." unique_id=128405873]
+unique_name_in_owner = true
+script = ExtResource("4_qotaa")
+
+[node name="FlameThrower" type="Node2D" parent="." unique_id=1276116610 node_paths=PackedStringArray("particles", "body")]
+script = ExtResource("5_70a8x")
+particles = NodePath("Sprite2D/GPUParticles2D")
+body = NodePath("..")
+knockback = 300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="FlameThrower" unique_id=592789294]
+position = Vector2(31, 0)
+scale = Vector2(0.25, 0.06)
+texture = ExtResource("2_70a8x")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="FlameThrower/Sprite2D" unique_id=80371021]
+position = Vector2(60, 16.666672)
+amount = 100
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_uxwkn")
+
+[connection signal="moved_up" from="InputManager" to="." method="jump"]

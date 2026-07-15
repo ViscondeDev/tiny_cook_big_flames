@@ -1,0 +1,23 @@
+@icon("uid://drb3cti1wslkx")
+class_name InputManager
+extends Node
+
+signal moved_up
+
+@export var enabled: bool = true:
+	set(value):
+		enabled = value
+		if not enabled:
+			direction = Vector2.ZERO
+
+var direction: Vector2 = Vector2.ZERO
+
+
+func get_directional_inputs() -> float:
+	var input_direction: float = Input.get_axis("move_left", "move_right")
+	return input_direction
+
+
+func get_actions() -> void:
+	if Input.is_action_just_pressed("move_up"):
+		moved_up.emit()
