@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b0tpg0v0s8w1g" path="res://icon.svg" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bbv6s4cukl8n6" path="res://scenes/chef/chef.tscn" id="2_sugp2"]
+[ext_resource type="Script" uid="uid://b4mannsakrc5q" path="res://scenes/igredient/igredient.gd" id="3_sugp2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0wfyh"]
 texture = ExtResource("1_0wfyh")
@@ -44,6 +45,9 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_0wfyh")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uwoax"]
+size = Vector2(130, 128)
+
 [node name="Main" type="Node2D" unique_id=1989545578]
 position = Vector2(320, 448)
 
@@ -53,3 +57,17 @@ format = 2
 layer_0/tile_data = PackedInt32Array(-458762, 65538, 1, -393226, 65538, 1, -327690, 65538, 1, -262154, 65538, 1, -196618, 65538, 1, -131082, 65538, 1, -65546, 65538, 1, -10, 65538, 1, 65526, 65538, 1, 131062, 65538, 1, 196598, 65538, 1, 262134, 65538, 1, 327670, 65538, 1, 393206, 65538, 1, 393207, 65538, 1, 393208, 65538, 1, 393209, 65538, 1, 393210, 65538, 1, 393211, 65538, 1, 393212, 65538, 1, 393213, 65538, 1, 393214, 65538, 1, 393215, 65538, 1, 327680, 65538, 1, 327681, 65538, 1, 327682, 65538, 1, 327683, 65538, 1, 327684, 65538, 1, 327685, 65538, 1, 327686, 65538, 1, 327687, 65538, 1, 327688, 65538, 1, 327689, 65538, 1, 262153, 65538, 1, 196617, 65538, 1, 131081, 65538, 1, 65545, 65538, 1, 9, 65538, 1, -65527, 65538, 1, -131063, 65538, 1, -196599, 65538, 1, -262135, 65538, 1, -327671, 65538, 1, -393207, 65538, 1, -655351, 65538, 1, -720887, 65538, 1, -524298, 65538, 1, -786423, 65538, 1, -851959, 65538, 1, -917495, 65538, 1, -917496, 65538, 1, -917497, 65538, 1, -917498, 65538, 1, -917499, 65538, 1, -917500, 65538, 1, -917501, 65538, 1, -917502, 65538, 1, -917503, 65538, 1, -917504, 65538, 1, -851969, 65538, 1, -851970, 65538, 1, -851971, 65538, 1, -851972, 65538, 1, -851973, 65538, 1, -851974, 65538, 1, -851975, 65538, 1, -851976, 65538, 1, -851977, 65538, 1, -851978, 65538, 1, -786442, 65538, 1, -720906, 65538, 1, -655370, 65538, 1, -589834, 65538, 1, 131063, 65538, 1, 131064, 65538, 1, 131065, 65538, 1, 131066, 65538, 1, 131067, 65538, 1, -589815, 65538, 1, -524279, 65538, 1, -458743, 65538, 1, -65539, 65538, 1, -65538, 65538, 1, -65537, 65538, 1, -131072, 65538, 1, -131071, 65538, 1, -327676, 65538, 1, -327675, 65538, 1, -327674, 65538, 1, 262149, 65538, 1, 196613, 65538, 1, 131077, 65538, 1, 131078, 65538, 1, 131079, 65538, 1, 131080, 65538, 1, -393225, 65538, 1, -393224, 65538, 1, -393223, 65538, 1, -393222, 65538, 1)
 
 [node name="Chef" parent="." unique_id=931864157 instance=ExtResource("2_sugp2")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=520068106 node_paths=PackedStringArray("sprite")]
+position = Vector2(-53, 26)
+collision_layer = 2
+script = ExtResource("3_sugp2")
+sprite = NodePath("Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1447052439]
+position = Vector2(65, 64)
+shape = SubResource("RectangleShape2D_uwoax")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=139208668]
+position = Vector2(64, 64)
+texture = ExtResource("1_0wfyh")

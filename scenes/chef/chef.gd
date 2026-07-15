@@ -17,6 +17,8 @@ func _physics_process(_delta: float) -> void:
 		sprite.flip_h = true
 	elif direction > 0:
 		sprite.flip_h = false
+	
+
 
 
 func jump() -> void:

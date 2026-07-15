@@ -40,7 +40,13 @@ script = ExtResource("4_qotaa")
 script = ExtResource("5_70a8x")
 particles = NodePath("Sprite2D/GPUParticles2D")
 body = NodePath("..")
-knockback = 300.0
+knockback = 120.0
+
+[node name="RayCast2D" type="RayCast2D" parent="FlameThrower" unique_id=473401424]
+unique_name_in_owner = true
+target_position = Vector2(150, 0)
+collision_mask = 2
+hit_from_inside = true
 
 [node name="Sprite2D" type="Sprite2D" parent="FlameThrower" unique_id=592789294]
 position = Vector2(31, 0)
