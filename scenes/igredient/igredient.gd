@@ -1,4 +1,4 @@
-@icon("res://addons/at-icons/node/meat.svg")
+@icon("res://addons/at-icons/node2d/poultry.svg")
 class_name Igredient
 extends StaticBody2D
 

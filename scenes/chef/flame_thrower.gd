@@ -13,9 +13,8 @@ func _physics_process(_delta: float) -> void:
 		var collision_point: Vector2 = ray.get_collision_point()
 		if collision_point != Vector2.ZERO:
 			var target: Igredient = ray.get_collider() as Igredient
-			if not target is Igredient:
-				return
-			target.paint(collision_point)
+			if target is Igredient:
+				target.paint(collision_point)
 	else:
 		body.movement_manager.knockback = Vector2.ZERO
 	follow_mouse()
