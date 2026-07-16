@@ -2,25 +2,58 @@
 class_name FlameThrower
 extends Node2D
 
+const NOISE1_SPEED = 750.0
+const NOISE2_SPEED = 500.0
+const FIRE_SPEED = 0.5
+@onready var flame_rect: ColorRect = %ColorRect
 @onready var ray: RayCast2D = %RayCast2D
 @export var particles: GPUParticles2D
 @export var body: Chef
 @export var knockback_force: float = 300
 @export var max_knockback: Vector2 = Vector2(50, 50)
 
+@onready var mat: ShaderMaterial = flame_rect.material
+@onready var noise1: NoiseTexture2D = mat.get_shader_parameter("noise1_texture")
+@onready var noise2: NoiseTexture2D = mat.get_shader_parameter("noise2_texture")
+
+var fire_val: float = 0.0
+func _tween_parameter(value: float, parameter: String) -> void:
+	mat.set_shader_parameter(parameter, value)
+	
+func _reset_offsets() -> void:
+	@warning_ignore("unsafe_property_access")
+	noise1.noise.offset.x = 0
+	@warning_ignore("unsafe_property_access")
+	noise2.noise.offset.x = 0
+	
 var firing: bool = false:
 	set(value):
 		if value:
-			particles.emitting = true
+			mat.set_shader_parameter("clean_progress", 0.0)
+			_reset_offsets()
+			create_tween().tween_method(
+				_tween_parameter.bind("fire_progress"),
+				0.0, 1.0, 0.25
+			).set_trans(Tween.TRANS_CUBIC)
+			#particles.emitting = true
 		else:
-			particles.emitting = false
+			create_tween().tween_method(
+				_tween_parameter.bind("clean_progress"),
+				0.0, 1.0, 0.25
+			).set_trans(Tween.TRANS_CUBIC)
+			#particles.emitting = false
 			body.apply_knockback(Vector2.ZERO)
 		firing = value
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	look_at(get_global_mouse_position())
 
+	@warning_ignore("unsafe_property_access")
+	noise1.noise.offset.x -= delta * NOISE1_SPEED
+	@warning_ignore("unsafe_property_access")
+	noise2.noise.offset.x -= delta * NOISE2_SPEED
+	
 	if firing:
 		body.apply_knockback(_calculate_knockback())
 		_detect_igredient()
