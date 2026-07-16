@@ -3,21 +3,38 @@
 [ext_resource type="Script" uid="uid://kg5b2n87modc" path="res://scenes/chef/flame_thrower.gd" id="1_1loin"]
 [ext_resource type="Texture2D" uid="uid://b0tpg0v0s8w1g" path="res://icon.svg" id="2_yqdbh"]
 
+[sub_resource type="Gradient" id="Gradient_1loin"]
+offsets = PackedFloat32Array(0.017621145, 0.3171806, 0.55947137, 0.88105726, 1)
+colors = PackedColorArray(0, 0, 0.57, 0.6745098, 0.72, 0.6801601, 0.122400016, 0.8745098, 0.92, 0.5382, 0.15640002, 0.92941177, 0.94, 0.15980001, 0.15980001, 0.93333334, 0.48, 0.48, 0.48, 0.56078434)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jyhfs"]
+gradient = SubResource("Gradient_1loin")
+
+[sub_resource type="Curve" id="Curve_yqdbh"]
+_data = [Vector2(0.007905133, 0.20652163), 0.0, 0.0, 0, 0, Vector2(0.82608694, 0.44565213), 0.35483867, 0.35483867, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_sugp2"]
+curve = SubResource("Curve_yqdbh")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uxwkn"]
 particle_flag_disable_z = true
 initial_velocity_min = 731.95
 initial_velocity_max = 845.36
 gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 20.0
+scale_curve = SubResource("CurveTexture_sugp2")
+color_ramp = SubResource("GradientTexture1D_jyhfs")
 
-[node name="FlameThrower" type="Node2D" unique_id=736112583 node_paths=PackedStringArray("particles", "body")]
+[node name="FlameThrower" type="Node2D" unique_id=736112583 node_paths=PackedStringArray("particles")]
 script = ExtResource("1_1loin")
 particles = NodePath("Sprite2D/GPUParticles2D")
-body = NodePath("")
-knockback = 300.0
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1102199366]
 unique_name_in_owner = true
-target_position = Vector2(150, 0)
+position = Vector2(15, 0)
+target_position = Vector2(80, 0)
 collision_mask = 2
 hit_from_inside = true
 
@@ -29,6 +46,6 @@ texture = ExtResource("2_yqdbh")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D" unique_id=54754848]
 position = Vector2(60, 16.666672)
 emitting = false
-amount = 100
-lifetime = 0.5
+amount = 500
+lifetime = 0.25
 process_material = SubResource("ParticleProcessMaterial_uxwkn")

@@ -36,5 +36,9 @@ body = NodePath("..")
 knockback_force = 800.0
 max_knockback = Vector2(100, 600)
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1162832884]
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
 [connection signal="moved_up" from="InputManager" to="." method="jump"]
 [connection signal="updated_mouse_1" from="InputManager" to="FlameThrower" method="_update_state"]

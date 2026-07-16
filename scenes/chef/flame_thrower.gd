@@ -10,7 +10,6 @@ extends Node2D
 
 var firing: bool = false:
 	set(value):
-		print("mouse :", value)
 		if value:
 			particles.emitting = true
 		else:

@@ -3,7 +3,7 @@ class_name Igredient
 extends StaticBody2D
 
 @export var sprite: Sprite2D
-@export var cook_radius: int = 10
+@export var cook_radius: int = 50
 
 
 func paint(point: Vector2) -> void:
@@ -24,8 +24,7 @@ func paint(point: Vector2) -> void:
 				continue
 			var color: Color = image.get_pixel(x, y)
 
-			# Ignora pixels transparentes
 			if color.a > 0.0:
-				image.set_pixel(x, y, Color.WHITE)
+				image.set_pixel(x, y, Color.RED)
 
 	sprite.texture = ImageTexture.create_from_image(image)
