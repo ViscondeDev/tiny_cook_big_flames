@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var flame_thrower: FlameThrower = %FlameThrower
 @onready var animation: AnimationPlayer = %AnimationPlayer
 @onready var state_machine: ChefStates = %StateMachine
+@onready var audio_set: ChefAudioSet = %AudioSet
 
 
 func _ready() -> void:
@@ -29,6 +30,7 @@ func _physics_process(_delta: float) -> void:
 func jump() -> void:
 	if is_on_floor():
 		movement_manager.jump()
+		audio_set.jump()
 
 
 func apply_knockback(force: Vector2) -> void:

@@ -6,6 +6,13 @@
 [ext_resource type="Script" uid="uid://7cvetaxggjx8" path="res://share/input_component.gd" id="4_qotaa"]
 [ext_resource type="PackedScene" uid="uid://bydq8ugvshpbm" path="res://scenes/flame_thrower/flame_thrower.tscn" id="5_70a8x"]
 [ext_resource type="Script" uid="uid://460m7gtcu45d" path="res://scenes/chef/chef_states.gd" id="6_tcv5e"]
+[ext_resource type="Script" uid="uid://c4cp7svaci08c" path="res://scenes/chef/audio_set.gd" id="7_hxqsm"]
+[ext_resource type="AudioStream" uid="uid://bsvr005rgl4tp" path="res://assets/sfx/sfx_gmtk26_tcbf_char_jump_1.wav" id="7_qotaa"]
+[ext_resource type="AudioStream" uid="uid://bqt4eyqeqp22" path="res://assets/sfx/sfx_gmtk26_tcbf_char_jump_2.wav" id="9_ht2jf"]
+[ext_resource type="AudioStream" uid="uid://cd0287c7ak5m" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_1.wav" id="10_e3jl4"]
+[ext_resource type="AudioStream" uid="uid://ddx23x6p0a442" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_2.wav" id="11_7bqq1"]
+[ext_resource type="AudioStream" uid="uid://dp675234jhdm" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_3.wav" id="12_3o3y4"]
+[ext_resource type="AudioStream" uid="uid://bo6gerp1cjmow" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_4.wav" id="13_pdoy6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwoax"]
 size = Vector2(16, 18)
@@ -138,11 +145,38 @@ drag_vertical_enabled = true
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_qotaa")
 
-[node name="StateMachine" type="Node" parent="." unique_id=328930874 node_paths=PackedStringArray("chef")]
+[node name="StateMachine" type="Node" parent="." unique_id=328930874 node_paths=PackedStringArray("chef", "audio_set")]
 unique_name_in_owner = true
 script = ExtResource("6_tcv5e")
 chef = NodePath("..")
+audio_set = NodePath("../AudioSet")
 metadata/_custom_type_script = "uid://rfhi442weyo7"
+
+[node name="AudioSet" type="Node" parent="." unique_id=990780329 node_paths=PackedStringArray("jump_sounds", "walk_sounds")]
+unique_name_in_owner = true
+script = ExtResource("7_hxqsm")
+jump_sounds = [NodePath("jump1"), NodePath("jump2")]
+walk_sounds = [NodePath("walk1"), NodePath("walk2"), NodePath("walk3"), NodePath("walk4")]
+
+[node name="jump1" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=387471426]
+stream = ExtResource("7_qotaa")
+volume_db = 11.632
+
+[node name="jump2" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=1752640623]
+stream = ExtResource("9_ht2jf")
+volume_db = 11.632
+
+[node name="walk1" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=1093718368]
+stream = ExtResource("10_e3jl4")
+
+[node name="walk2" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=1637324564]
+stream = ExtResource("11_7bqq1")
+
+[node name="walk3" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=907780703]
+stream = ExtResource("12_3o3y4")
+
+[node name="walk4" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=801684502]
+stream = ExtResource("13_pdoy6")
 
 [connection signal="moved_up" from="InputManager" to="." method="jump"]
 [connection signal="updated_mouse_1" from="InputManager" to="FlameThrower" method="_update_state"]

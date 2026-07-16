@@ -4,6 +4,7 @@ extends StateMachine
 enum State { WALKING, FALLING, IDLE }
 
 @export var chef: Chef
+@export var audio_set: ChefAudioSet
 
 
 func _ready() -> void:
@@ -30,12 +31,15 @@ func walking(command: Command, _data: Variant) -> void:
 	match command:
 		Command.ENTER:
 			chef.animation.play("walking")
+			audio_set.is_walking = true
 		Command.CHECK:
 			if chef.is_on_floor():
 				if chef.movement_manager.input_axis == 0:
 					change_state(State.IDLE)
 			else:
 				change_state(State.FALLING)
+		Command.EXIT:
+			audio_set.is_walking = false
 
 
 func falling(command: Command, _data: Variant) -> void:
