@@ -1,8 +1,38 @@
 [gd_scene format=3 uid="uid://bydq8ugvshpbm"]
 
 [ext_resource type="Script" uid="uid://kg5b2n87modc" path="res://scenes/chef/flame_thrower.gd" id="1_1loin"]
+[ext_resource type="Shader" uid="uid://csl55csh8t8jr" path="res://scenes/flame_thrower/shimmer.gdshader" id="2_b0prg"]
 [ext_resource type="Texture2D" uid="uid://dsa0xy531ilpv" path="res://assets/flamethrower.png" id="2_yqdbh"]
 [ext_resource type="Shader" uid="uid://ber5sdgndrkb5" path="res://scenes/flame_thrower/flame.gdshader" id="3_yqdbh"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q1tmq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vn17j"]
+width = 640
+height = 360
+noise = SubResource("FastNoiseLite_q1tmq")
+as_normal_map = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4d3s"]
+shader = ExtResource("2_b0prg")
+shader_parameter/shimmer_texture = SubResource("NoiseTexture2D_vn17j")
+
+[sub_resource type="Curve" id="Curve_5lqi1"]
+_data = [Vector2(0, 0.35664338), 0.0, 0.0, 0, 0, Vector2(0.4088983, 0.8065268), 0.9502014, 0.9502014, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_o0d7n"]
+curve = SubResource("Curve_5lqi1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qao8v"]
+particle_flag_disable_z = true
+spread = 0.0
+initial_velocity_min = 377.88
+initial_velocity_max = 453.62
+gravity = Vector3(0, 0, 0)
+scale_min = 18.43
+scale_max = 69.13
+scale_curve = SubResource("CurveTexture_o0d7n")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d4rm1"]
 noise_type = 2
@@ -31,8 +61,9 @@ shader_parameter/color2 = Color(1, 0.827451, 0, 1)
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b0prg"]
 load_path = "res://.godot/imported/flamethrower.png-0f3ddf65faf51f6ebf8193a494699c20.ctex"
 
-[node name="FlameThrower" type="Node2D" unique_id=736112583]
+[node name="FlameThrower" type="Node2D" unique_id=736112583 node_paths=PackedStringArray("particles")]
 script = ExtResource("1_1loin")
+particles = NodePath("GPUParticles2D")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1102199366]
 unique_name_in_owner = true
@@ -40,6 +71,14 @@ position = Vector2(15, 0)
 target_position = Vector2(80, 0)
 collision_mask = 2
 hit_from_inside = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1544315817]
+material = SubResource("ShaderMaterial_r4d3s")
+position = Vector2(28, 0)
+emitting = false
+amount = 15
+lifetime = 0.28
+process_material = SubResource("ParticleProcessMaterial_qao8v")
 
 [node name="Torch" type="Sprite2D" parent="." unique_id=1992000121]
 unique_name_in_owner = true

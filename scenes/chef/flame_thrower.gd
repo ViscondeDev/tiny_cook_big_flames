@@ -46,7 +46,7 @@ func _start_flame() -> void:
 		1.0,
 		0.25,
 	).set_trans(Tween.TRANS_CUBIC)
-	#particles.emitting = true
+	particles.emitting = true
 
 
 func _stop_flame() -> void:
@@ -60,7 +60,7 @@ func _stop_flame() -> void:
 		1.0,
 		0.25,
 	).set_trans(Tween.TRANS_CUBIC)
-	#particles.emitting = false
+	particles.emitting = false
 
 
 var firing: bool = false:
