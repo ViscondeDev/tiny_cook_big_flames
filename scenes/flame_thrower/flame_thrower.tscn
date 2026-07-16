@@ -31,9 +31,8 @@ shader_parameter/color2 = Color(1, 0.827451, 0, 1)
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b0prg"]
 load_path = "res://.godot/imported/flamethrower.png-0f3ddf65faf51f6ebf8193a494699c20.ctex"
 
-[node name="FlameThrower" type="Node2D" unique_id=736112583 node_paths=PackedStringArray("particles")]
+[node name="FlameThrower" type="Node2D" unique_id=736112583]
 script = ExtResource("1_1loin")
-particles = NodePath("")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1102199366]
 unique_name_in_owner = true

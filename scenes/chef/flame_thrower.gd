@@ -19,6 +19,7 @@ const FIRE_SPEED = 0.5
 @onready var noise2: NoiseTexture2D = mat.get_shader_parameter("noise2_texture")
 
 var fire_val: float = 0.0
+var fire_tween: Tween
 
 
 func _tween_parameter(value: float, parameter: String) -> void:
@@ -32,26 +33,42 @@ func _reset_offsets() -> void:
 	noise2.noise.offset.x = 0
 
 
+func _start_flame() -> void:
+	_reset_offsets()
+	mat.set_shader_parameter("clean_progress", 0.0)
+	if fire_tween:
+		fire_tween.kill()
+		
+	fire_tween = create_tween()
+	fire_tween.tween_method(
+		_tween_parameter.bind("fire_progress"),
+		0.0,
+		1.0,
+		0.25,
+	).set_trans(Tween.TRANS_CUBIC)
+	#particles.emitting = true
+
+
+func _stop_flame() -> void:
+	if fire_tween:
+		fire_tween.kill()
+		
+	fire_tween = create_tween()
+	fire_tween.tween_method(
+		_tween_parameter.bind("clean_progress"),
+		0.0,
+		1.0,
+		0.25,
+	).set_trans(Tween.TRANS_CUBIC)
+	#particles.emitting = false
+
+
 var firing: bool = false:
 	set(value):
 		if value:
-			mat.set_shader_parameter("clean_progress", 0.0)
-			_reset_offsets()
-			create_tween().tween_method(
-				_tween_parameter.bind("fire_progress"),
-				0.0,
-				1.0,
-				0.25,
-			).set_trans(Tween.TRANS_CUBIC)
-			#particles.emitting = true
+			_start_flame()
 		else:
-			create_tween().tween_method(
-				_tween_parameter.bind("clean_progress"),
-				0.0,
-				1.0,
-				0.25,
-			).set_trans(Tween.TRANS_CUBIC)
-			#particles.emitting = false
+			_stop_flame()
 			body.apply_knockback(Vector2.ZERO)
 		firing = value
 
