@@ -7,6 +7,8 @@ const NOISE2_SPEED = 500.0
 const FIRE_SPEED = 0.5
 @onready var flame_rect: ColorRect = %ColorRect
 @onready var ray: RayCast2D = %RayCast2D
+@onready var torch: Sprite2D = %Torch
+@onready var hands: Sprite2D = %Hands
 @export var particles: GPUParticles2D
 @export var body: Chef
 @export var knockback_force: float = 300
@@ -17,15 +19,19 @@ const FIRE_SPEED = 0.5
 @onready var noise2: NoiseTexture2D = mat.get_shader_parameter("noise2_texture")
 
 var fire_val: float = 0.0
+
+
 func _tween_parameter(value: float, parameter: String) -> void:
 	mat.set_shader_parameter(parameter, value)
-	
+
+
 func _reset_offsets() -> void:
 	@warning_ignore("unsafe_property_access")
 	noise1.noise.offset.x = 0
 	@warning_ignore("unsafe_property_access")
 	noise2.noise.offset.x = 0
-	
+
+
 var firing: bool = false:
 	set(value):
 		if value:
@@ -33,13 +39,17 @@ var firing: bool = false:
 			_reset_offsets()
 			create_tween().tween_method(
 				_tween_parameter.bind("fire_progress"),
-				0.0, 1.0, 0.25
+				0.0,
+				1.0,
+				0.25,
 			).set_trans(Tween.TRANS_CUBIC)
 			#particles.emitting = true
 		else:
 			create_tween().tween_method(
 				_tween_parameter.bind("clean_progress"),
-				0.0, 1.0, 0.25
+				0.0,
+				1.0,
+				0.25,
 			).set_trans(Tween.TRANS_CUBIC)
 			#particles.emitting = false
 			body.apply_knockback(Vector2.ZERO)
@@ -48,12 +58,14 @@ var firing: bool = false:
 
 func _physics_process(delta: float) -> void:
 	look_at(get_global_mouse_position())
+	torch.flip_v = body.global_position < ray.global_position
+	hands.flip_v = body.global_position < ray.global_position
 
 	@warning_ignore("unsafe_property_access")
 	noise1.noise.offset.x -= delta * NOISE1_SPEED
 	@warning_ignore("unsafe_property_access")
 	noise2.noise.offset.x -= delta * NOISE2_SPEED
-	
+
 	if firing:
 		body.apply_knockback(_calculate_knockback())
 		_detect_igredient()
