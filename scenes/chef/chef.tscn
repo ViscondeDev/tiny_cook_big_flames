@@ -9,10 +9,10 @@
 [ext_resource type="Script" uid="uid://c4cp7svaci08c" path="res://scenes/chef/audio_set.gd" id="7_hxqsm"]
 [ext_resource type="AudioStream" uid="uid://bsvr005rgl4tp" path="res://assets/sfx/sfx_gmtk26_tcbf_char_jump_1.wav" id="7_qotaa"]
 [ext_resource type="AudioStream" uid="uid://bqt4eyqeqp22" path="res://assets/sfx/sfx_gmtk26_tcbf_char_jump_2.wav" id="9_ht2jf"]
-[ext_resource type="AudioStream" uid="uid://cd0287c7ak5m" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_1.wav" id="10_e3jl4"]
-[ext_resource type="AudioStream" uid="uid://ddx23x6p0a442" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_2.wav" id="11_7bqq1"]
-[ext_resource type="AudioStream" uid="uid://dp675234jhdm" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_3.wav" id="12_3o3y4"]
-[ext_resource type="AudioStream" uid="uid://bo6gerp1cjmow" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_4.wav" id="13_pdoy6"]
+[ext_resource type="AudioStream" uid="uid://i7ac3bb1eo0r" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_1_v2.wav" id="10_e3jl4"]
+[ext_resource type="AudioStream" uid="uid://dxva40ndqhty3" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_2_v2.wav" id="11_7bqq1"]
+[ext_resource type="AudioStream" uid="uid://bmurh5gsinl7j" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_3_v2.wav" id="12_3o3y4"]
+[ext_resource type="AudioStream" uid="uid://bx8hd6lg0637y" path="res://assets/sfx/sfx_gmtk26_tcbf_char_walk_4_v2.wav" id="13_pdoy6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwoax"]
 size = Vector2(16, 18)
@@ -141,6 +141,9 @@ zoom = Vector2(1.5, 1.5)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D" unique_id=411053837]
+current = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1726369026]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_qotaa")
@@ -152,7 +155,7 @@ chef = NodePath("..")
 audio_set = NodePath("../AudioSet")
 metadata/_custom_type_script = "uid://rfhi442weyo7"
 
-[node name="AudioSet" type="Node" parent="." unique_id=990780329 node_paths=PackedStringArray("jump_sounds", "walk_sounds")]
+[node name="AudioSet" type="Node2D" parent="." unique_id=1408218602 node_paths=PackedStringArray("jump_sounds", "walk_sounds")]
 unique_name_in_owner = true
 script = ExtResource("7_hxqsm")
 jump_sounds = [NodePath("jump1"), NodePath("jump2")]
