@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://kg5b2n87modc" path="res://scenes/chef/flame_thrower.gd" id="1_1loin"]
 [ext_resource type="Texture2D" uid="uid://b0tpg0v0s8w1g" path="res://icon.svg" id="2_yqdbh"]
+[ext_resource type="Shader" uid="uid://ber5sdgndrkb5" path="res://scenes/flame_thrower/flame.gdshader" id="3_yqdbh"]
 
 [sub_resource type="Gradient" id="Gradient_1loin"]
 offsets = PackedFloat32Array(0.017621145, 0.3171806, 0.55947137, 0.88105726, 1)
@@ -27,6 +28,30 @@ scale_max = 20.0
 scale_curve = SubResource("CurveTexture_sugp2")
 color_ramp = SubResource("GradientTexture1D_jyhfs")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d4rm1"]
+noise_type = 2
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qao8v"]
+noise = SubResource("FastNoiseLite_d4rm1")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r4d3s"]
+noise_type = 2
+frequency = 0.0171
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o0d7n"]
+noise = SubResource("FastNoiseLite_r4d3s")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2oa66"]
+shader = ExtResource("3_yqdbh")
+shader_parameter/noise1_texture = SubResource("NoiseTexture2D_qao8v")
+shader_parameter/noise2_texture = SubResource("NoiseTexture2D_o0d7n")
+shader_parameter/fire_progress = 0.0
+shader_parameter/clean_progress = 0.0
+shader_parameter/color1 = Color(0.88235295, 0.3529412, 0, 1)
+shader_parameter/color2 = Color(1, 0.827451, 0, 1)
+
 [node name="FlameThrower" type="Node2D" unique_id=736112583 node_paths=PackedStringArray("particles")]
 script = ExtResource("1_1loin")
 particles = NodePath("Sprite2D/GPUParticles2D")
@@ -49,3 +74,11 @@ emitting = false
 amount = 500
 lifetime = 0.25
 process_material = SubResource("ParticleProcessMaterial_uxwkn")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D" unique_id=1270111485]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_2oa66")
+offset_left = 72.0
+offset_top = -183.33333
+offset_right = 384.0
+offset_bottom = 183.33336
