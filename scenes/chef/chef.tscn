@@ -1,23 +1,116 @@
 [gd_scene format=3 uid="uid://bbv6s4cukl8n6"]
 
 [ext_resource type="Script" uid="uid://2s4ty156xpvx" path="res://scenes/chef/chef.gd" id="1_5yt76"]
-[ext_resource type="Texture2D" uid="uid://bx7641gva4cay" path="res://addons/pixel_adventures/Main Characters/Ninja Frog/Fall (32x32).png" id="2_tcv5e"]
+[ext_resource type="Texture2D" uid="uid://t7esarj3j4uc" path="res://assets/chef.png" id="2_70a8x"]
 [ext_resource type="Script" uid="uid://do1xcx3vktr1b" path="res://share/movement.gd" id="3_tcv5e"]
 [ext_resource type="Script" uid="uid://7cvetaxggjx8" path="res://share/input_component.gd" id="4_qotaa"]
 [ext_resource type="PackedScene" uid="uid://bydq8ugvshpbm" path="res://scenes/flame_thrower/flame_thrower.tscn" id="5_70a8x"]
+[ext_resource type="Script" uid="uid://460m7gtcu45d" path="res://scenes/chef/chef_states.gd" id="6_tcv5e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwoax"]
-size = Vector2(24, 26)
+size = Vector2(16, 18)
+
+[sub_resource type="Animation" id="Animation_70a8x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qotaa"]
+resource_name = "falling"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [12]
+}
+
+[sub_resource type="Animation" id="Animation_hxqsm"]
+resource_name = "hit_floor"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [10, 12]
+}
+
+[sub_resource type="Animation" id="Animation_tcv5e"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 3]
+}
+
+[sub_resource type="Animation" id="Animation_jo846"]
+resource_name = "walking"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [20, 29]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qotaa"]
+_data = {
+&"RESET": SubResource("Animation_70a8x"),
+&"falling": SubResource("Animation_qotaa"),
+&"hit_floor": SubResource("Animation_hxqsm"),
+&"idle": SubResource("Animation_tcv5e"),
+&"walking": SubResource("Animation_jo846")
+}
 
 [node name="Chef" type="CharacterBody2D" unique_id=931864157]
 script = ExtResource("1_5yt76")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1464344227]
 unique_name_in_owner = true
-texture = ExtResource("2_tcv5e")
+position = Vector2(0, -3)
+texture = ExtResource("2_70a8x")
+hframes = 10
+vframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=431255304]
-position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_uwoax")
 
 [node name="MovementComponent" type="Node" parent="." unique_id=365017994 node_paths=PackedStringArray("body")]
@@ -34,11 +127,22 @@ script = ExtResource("4_qotaa")
 unique_name_in_owner = true
 body = NodePath("..")
 knockback_force = 800.0
-max_knockback = Vector2(100, 600)
+max_knockback = Vector2(60, 600)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1162832884]
+zoom = Vector2(1.5, 1.5)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1726369026]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_qotaa")
+
+[node name="StateMachine" type="Node" parent="." unique_id=328930874 node_paths=PackedStringArray("chef")]
+unique_name_in_owner = true
+script = ExtResource("6_tcv5e")
+chef = NodePath("..")
+metadata/_custom_type_script = "uid://rfhi442weyo7"
 
 [connection signal="moved_up" from="InputManager" to="." method="jump"]
 [connection signal="updated_mouse_1" from="InputManager" to="FlameThrower" method="_update_state"]

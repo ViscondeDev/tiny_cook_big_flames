@@ -5,6 +5,12 @@ extends CharacterBody2D
 @onready var input_manager: InputManager = %InputManager
 @onready var movement_manager: MovementComponent = %MovementComponent
 @onready var flame_thrower: FlameThrower = %FlameThrower
+@onready var animation: AnimationPlayer = %AnimationPlayer
+@onready var state_machine: ChefStates = %StateMachine
+
+
+func _ready() -> void:
+	state_machine.change_state(state_machine.State.IDLE)
 
 
 func _physics_process(_delta: float) -> void:
