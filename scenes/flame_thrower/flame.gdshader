@@ -2,8 +2,8 @@ shader_type canvas_item;
 
 uniform sampler2D noise1_texture;
 uniform sampler2D noise2_texture;
-uniform float fire_progress : hint_range(0.0, 1.0) = 1.0;
-uniform float clean_progress : hint_range(0.0, 1.0) = 0.5;
+uniform float fire_progress : hint_range(0.0, 1.0) = 0.0;
+uniform float clean_progress : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 color1 : source_color;
 uniform vec3 color2 : source_color;
 
