@@ -14,11 +14,8 @@ extends Node
 		_drag_delta = speed / value
 
 var _drag_delta: float = 0
-var direction: Vector2 = Vector2.ZERO
+var input_axis: float = 0
 var knockback: Vector2 = Vector2.ZERO
-var vertical_acceleration: float = 0
-
-var _internal_velocity: Vector2
 
 
 func _physics_process(delta: float) -> void:
@@ -30,11 +27,12 @@ func _physics_process(delta: float) -> void:
 
 
 func apply_movement_speed(delta: float) -> void:
-	if direction.x != 0:
-		_internal_velocity.x = (direction.x * speed)
+	var _internal_velocity: float
+	if input_axis != 0:
+		_internal_velocity = input_axis * speed
 	else:
-		_internal_velocity.x = (move_toward(_internal_velocity.x, 0, _drag_delta * delta))
-	body.velocity.x = _internal_velocity.x + knockback.x
+		_internal_velocity = move_toward(_internal_velocity, 0, _drag_delta * delta)
+	body.velocity.x = _internal_velocity + knockback.x
 
 
 func apply_gravity(delta: float) -> void:
@@ -42,7 +40,7 @@ func apply_gravity(delta: float) -> void:
 		body.velocity.y = 0
 	else:
 		var _gracity_acceleration: float = (body.get_gravity().y * gravity_modifyer * delta)
-		body.velocity.y += _gracity_acceleration + (knockback.y * delta * 2.5)
+		body.velocity.y += _gracity_acceleration + (knockback.y * delta)
 
 
 func jump() -> void:

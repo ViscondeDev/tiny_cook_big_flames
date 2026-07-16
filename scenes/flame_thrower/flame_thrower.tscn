@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bydq8ugvshpbm"]
+
+[ext_resource type="Script" uid="uid://kg5b2n87modc" path="res://scenes/chef/flame_thrower.gd" id="1_1loin"]
+[ext_resource type="Texture2D" uid="uid://b0tpg0v0s8w1g" path="res://icon.svg" id="2_yqdbh"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uxwkn"]
+particle_flag_disable_z = true
+initial_velocity_min = 731.95
+initial_velocity_max = 845.36
+gravity = Vector3(0, 0, 0)
+
+[node name="FlameThrower" type="Node2D" unique_id=736112583 node_paths=PackedStringArray("particles", "body")]
+script = ExtResource("1_1loin")
+particles = NodePath("Sprite2D/GPUParticles2D")
+body = NodePath("")
+knockback = 300.0
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1102199366]
+unique_name_in_owner = true
+target_position = Vector2(150, 0)
+collision_mask = 2
+hit_from_inside = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1992000121]
+position = Vector2(31, 0)
+scale = Vector2(0.25, 0.06)
+texture = ExtResource("2_yqdbh")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D" unique_id=54754848]
+position = Vector2(60, 16.666672)
+emitting = false
+amount = 100
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_uxwkn")
