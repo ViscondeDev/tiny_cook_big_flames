@@ -21,6 +21,19 @@ const FIRE_SPEED = 0.5
 var fire_val: float = 0.0
 var fire_tween: Tween
 
+var target: Ingredient
+
+var firing: bool = false:
+	set(value):
+		if value:
+			_start_flame()
+		else:
+			_stop_flame()
+			body.apply_knockback(Vector2.ZERO)
+			if target != null:
+				target.apply_knockback(Vector2.ZERO)
+		firing = value
+
 
 func _tween_parameter(value: float, parameter: String) -> void:
 	mat.set_shader_parameter(parameter, value)
@@ -38,7 +51,7 @@ func _start_flame() -> void:
 	mat.set_shader_parameter("clean_progress", 0.0)
 	if fire_tween:
 		fire_tween.kill()
-		
+
 	fire_tween = create_tween()
 	fire_tween.tween_method(
 		_tween_parameter.bind("fire_progress"),
@@ -52,7 +65,7 @@ func _start_flame() -> void:
 func _stop_flame() -> void:
 	if fire_tween:
 		fire_tween.kill()
-		
+
 	fire_tween = create_tween()
 	fire_tween.tween_method(
 		_tween_parameter.bind("clean_progress"),
@@ -61,16 +74,6 @@ func _stop_flame() -> void:
 		0.25,
 	).set_trans(Tween.TRANS_CUBIC)
 	particles.emitting = false
-
-
-var firing: bool = false:
-	set(value):
-		if value:
-			_start_flame()
-		else:
-			_stop_flame()
-			body.apply_knockback(Vector2.ZERO)
-		firing = value
 
 
 func _physics_process(delta: float) -> void:
@@ -91,9 +94,10 @@ func _physics_process(delta: float) -> void:
 func _detect_igredient() -> void:
 	var collision_point: Vector2 = ray.get_collision_point()
 	if collision_point != Vector2.ZERO:
-		var target: Igredient = ray.get_collider()
-		if target is Igredient:
+		if ray.get_collider() is Ingredient:
+			target = ray.get_collider()
 			target.paint(collision_point)
+			target.apply_knockback(_calculate_knockback() * -2)
 
 
 func _calculate_knockback() -> Vector2:

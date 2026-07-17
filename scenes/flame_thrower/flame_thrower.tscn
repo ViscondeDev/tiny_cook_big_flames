@@ -73,6 +73,7 @@ collision_mask = 2
 hit_from_inside = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1544315817]
+z_index = 1
 material = SubResource("ShaderMaterial_r4d3s")
 position = Vector2(28, 0)
 emitting = false

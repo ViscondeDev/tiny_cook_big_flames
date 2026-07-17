@@ -135,7 +135,7 @@ unique_name_in_owner = true
 position = Vector2(1, -1)
 body = NodePath("..")
 knockback_force = 800.0
-max_knockback = Vector2(60, 400)
+max_knockback = Vector2(60, 500)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1162832884]
 zoom = Vector2(1.5, 1.5)

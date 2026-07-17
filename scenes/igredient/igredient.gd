@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 @export var sprite: Sprite2D
 @export var cook_radius: int = 50
+@export var movement_manager: MovementComponent
 
 
 func paint(point: Vector2) -> void:
@@ -25,6 +26,11 @@ func paint(point: Vector2) -> void:
 			var color: Color = image.get_pixel(x, y)
 
 			if color.a > 0.0:
-				image.set_pixel(x, y, Color.RED)
+				color.r += 0.1
+				image.set_pixel(x, y, color)
 
 	sprite.texture = ImageTexture.create_from_image(image)
+
+
+func apply_knockback(force: Vector2) -> void:
+	movement_manager.knockback = force
