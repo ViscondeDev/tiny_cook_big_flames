@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var cook_radius: int = 50
 @export var movement_manager: MovementComponent
 @export var burn_treshold: float = 0.4
+@export var audio: AudioStreamPlayer2D
 @onready var mat: ShaderMaterial = image.material
 
 var pixels_in_image: int
@@ -38,6 +39,11 @@ func create_new_heatmap() -> void:
 	var heatmap_texture: Texture2D = ImageTexture.create_from_image(heatmap)
 	mat.set_shader_parameter("heatmap_texture", heatmap_texture)
 
+func paint(point: Vector2) -> void:
+	if not audio.playing:
+		audio.play()
+
+	var collision_point: Vector2 = point - global_position
 
 func _internal_paint(collision_point: Vector2) -> void:
 	var _boundarie_top_left := collision_point - Vector2(cook_radius, cook_radius)

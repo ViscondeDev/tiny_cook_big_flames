@@ -49,8 +49,6 @@ func falling(command: Command, _data: Variant) -> void:
 		Command.CHECK:
 			if chef.is_on_floor():
 				chef.animation.play("hit_floor")
-				if not audio_set.walk_sounds[3].playing:
-					audio_set.walk_sounds[3].play()
 				await chef.animation.animation_finished
 				if chef.movement_manager.input_axis == 0:
 					change_state(State.IDLE)

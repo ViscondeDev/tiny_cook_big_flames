@@ -4,6 +4,9 @@
 [ext_resource type="Shader" uid="uid://csl55csh8t8jr" path="res://scenes/flame_thrower/shimmer.gdshader" id="2_b0prg"]
 [ext_resource type="Texture2D" uid="uid://dsa0xy531ilpv" path="res://assets/flamethrower.png" id="2_yqdbh"]
 [ext_resource type="Shader" uid="uid://ber5sdgndrkb5" path="res://scenes/flame_thrower/flame.gdshader" id="3_yqdbh"]
+[ext_resource type="AudioStream" uid="uid://b1mruel0pfj1f" path="res://assets/sfx/sfx_gmtk26_tcbf_flamethrower_Cast.wav" id="5_ivsrh"]
+[ext_resource type="AudioStream" uid="uid://dkwxnbae6qtgx" path="res://assets/sfx/sfx_gmtk26_tcbf_flamethrower_Hold_lp.wav" id="6_wgasx"]
+[ext_resource type="AudioStream" uid="uid://q8vgg3t7gp52" path="res://assets/sfx/sfx_gmtk26_tcbf_flamethrower_Release.wav" id="7_tdejw"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_q1tmq"]
 
@@ -61,9 +64,12 @@ shader_parameter/color2 = Color(1, 0.827451, 0, 1)
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b0prg"]
 load_path = "res://.godot/imported/flamethrower.png-0f3ddf65faf51f6ebf8193a494699c20.ctex"
 
-[node name="FlameThrower" type="Node2D" unique_id=736112583 node_paths=PackedStringArray("particles")]
+[node name="FlameThrower" type="Node2D" unique_id=736112583 node_paths=PackedStringArray("particles", "cast", "hold", "release")]
 script = ExtResource("1_1loin")
 particles = NodePath("GPUParticles2D")
+cast = NodePath("AudioSet/Cast")
+hold = NodePath("AudioSet/Hold")
+release = NodePath("AudioSet/Release")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1102199366]
 unique_name_in_owner = true
@@ -105,3 +111,17 @@ texture = SubResource("CompressedTexture2D_b0prg")
 flip_v = true
 region_enabled = true
 region_rect = Rect2(37, 3, 6, 9)
+
+[node name="AudioSet" type="Node2D" parent="." unique_id=1056629764]
+
+[node name="Cast" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=63968898]
+unique_name_in_owner = true
+stream = ExtResource("5_ivsrh")
+
+[node name="Hold" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=1639294283]
+unique_name_in_owner = true
+stream = ExtResource("6_wgasx")
+
+[node name="Release" type="AudioStreamPlayer2D" parent="AudioSet" unique_id=411585218]
+unique_name_in_owner = true
+stream = ExtResource("7_tdejw")

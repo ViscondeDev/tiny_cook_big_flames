@@ -14,6 +14,11 @@ const FIRE_SPEED = 0.5
 @export var knockback_force: float = 300
 @export var max_knockback: Vector2 = Vector2(50, 50)
 
+@export_category("sounds")
+@export var cast:AudioStreamPlayer2D
+@export var hold:AudioStreamPlayer2D
+@export var release:AudioStreamPlayer2D
+
 @onready var mat: ShaderMaterial = flame_rect.material
 @onready var noise1: NoiseTexture2D = mat.get_shader_parameter("noise1_texture")
 @onready var noise2: NoiseTexture2D = mat.get_shader_parameter("noise2_texture")
@@ -27,8 +32,11 @@ var firing: bool = false:
 	set(value):
 		if value:
 			_start_flame()
+			cast.play()
 		else:
 			_stop_flame()
+			release.play()
+			hold.stop()
 			body.apply_knockback(Vector2.ZERO)
 			if target != null:
 				target.apply_knockback(Vector2.ZERO)
@@ -89,6 +97,9 @@ func _physics_process(delta: float) -> void:
 	if firing:
 		body.apply_knockback(_calculate_knockback())
 		_detect_igredient()
+		if not hold.playing:
+			hold.play()
+
 
 
 func _detect_igredient() -> void:
