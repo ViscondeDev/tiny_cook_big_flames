@@ -1,6 +1,6 @@
 @icon("res://addons/at-icons/node2d/poultry.svg")
-class_name Igredient
-extends StaticBody2D
+class_name Ingredient
+extends CharacterBody2D
 
 @export var sprite: Sprite2D
 @export var cook_radius: int = 50
