@@ -13,6 +13,7 @@ radius = 38.052597
 load_path = "res://.godot/imported/Apple.png-14d984b84fed4b2f99a523888dca7972.ctex"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7lgnp"]
+resource_local_to_scene = true
 shader = ExtResource("5_5dlni")
 shader_parameter/image_texture = SubResource("CompressedTexture2D_ya4ey")
 
