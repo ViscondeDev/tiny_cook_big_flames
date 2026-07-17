@@ -4,15 +4,22 @@
 [ext_resource type="Texture2D" uid="uid://bxeun040s0sv8" path="res://assets/Apple.png" id="2_5dlni"]
 [ext_resource type="Script" uid="uid://do1xcx3vktr1b" path="res://share/movement.gd" id="3_7lgnp"]
 [ext_resource type="AudioStream" uid="uid://coqcg1ux51j0c" path="res://assets/sfx/sfx_gmtk26_tcbf_Cooking_food_lp.wav" id="4_owuyi"]
+[ext_resource type="Shader" uid="uid://cqbou358ry6hh" path="res://scenes/igredient/igredient.gdshader" id="5_5dlni"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uwoax"]
 radius = 38.052597
 
-[node name="Igredient" type="CharacterBody2D" unique_id=577785402 node_paths=PackedStringArray("sprite", "movement_manager", "audio")]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ya4ey"]
+load_path = "res://.godot/imported/Apple.png-14d984b84fed4b2f99a523888dca7972.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7lgnp"]
+shader = ExtResource("5_5dlni")
+shader_parameter/image_texture = SubResource("CompressedTexture2D_ya4ey")
+
+[node name="Igredient" type="CharacterBody2D" unique_id=577785402 node_paths=PackedStringArray("movement_manager", "audio")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_ayrya")
-sprite = NodePath("Sprite2D")
 cook_radius = 25
 movement_manager = NodePath("MovementComponent")
 audio = NodePath("AudioStreamPlayer2D")
@@ -36,3 +43,8 @@ stream = ExtResource("4_owuyi")
 volume_db = 5.473
 max_distance = 509.0
 attenuation = 3.3635848
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1002749723]
+material = SubResource("ShaderMaterial_7lgnp")
+offset_right = 192.0
+offset_bottom = 192.0
