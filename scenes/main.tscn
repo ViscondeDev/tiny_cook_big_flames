@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://5imyi4xo3aug" path="res://addons/pixel_adventures/Background/Brown.png" id="2_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://bbv6s4cukl8n6" path="res://scenes/chef/chef.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://d4mhq06nbr7se" path="res://scenes/igredient/igredient.tscn" id="4_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://bnac8a7s1qigt" path="res://scenes/igredient/Corn.tscn" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://c5v1f1t2kydnc" path="res://scenes/plate/plate.tscn" id="7_85g3d"]
 [ext_resource type="AudioStream" uid="uid://bp8dmtycq3g8v" path="res://assets/sfx/sfx_gmtk26_tcbf_Ambience_gameplay.wav" id="9_85g3d"]
 
@@ -470,6 +471,9 @@ collision_mask = 6
 
 [node name="Igredient" parent="." unique_id=577785402 instance=ExtResource("4_o6xl0")]
 position = Vector2(83, 381)
+
+[node name="Igredient3" parent="." unique_id=1218757543 instance=ExtResource("5_o6xl0")]
+position = Vector2(-350, 110)
 
 [node name="Igredient2" parent="." unique_id=960764816 instance=ExtResource("4_o6xl0")]
 position = Vector2(352, 404)

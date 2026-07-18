@@ -34,10 +34,8 @@ func create_new_heatmap() -> void:
 
 	for y in image_height:
 		for x in image_width:
-			var color: Color = new_heatmap.get_pixel(x, y)
-			if color.a > 0:
-				new_heatmap.set_pixel(x, y, Color.WHITE)
-				pixels_in_image += 1
+			new_heatmap.set_pixel(x, y, Color.WHITE)
+			pixels_in_image += 1
 	heatmap = new_heatmap
 
 	var heatmap_texture: Texture2D = ImageTexture.create_from_image(heatmap)

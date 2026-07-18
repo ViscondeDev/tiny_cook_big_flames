@@ -27,6 +27,7 @@ audio = NodePath("AudioStreamPlayer2D")
 metadata/_custom_type_script = "uid://b4mannsakrc5q"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1311680931]
+visible = false
 texture = ExtResource("2_5dlni")
 centered = false
 
@@ -49,3 +50,4 @@ attenuation = 3.3635848
 material = SubResource("ShaderMaterial_7lgnp")
 offset_right = 192.0
 offset_bottom = 192.0
+metadata/_edit_use_anchors_ = true
