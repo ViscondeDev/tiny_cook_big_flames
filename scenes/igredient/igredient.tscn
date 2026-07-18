@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://d4mhq06nbr7se"]
+
+[ext_resource type="Script" uid="uid://b4mannsakrc5q" path="res://scenes/igredient/igredient.gd" id="1_ayrya"]
+[ext_resource type="Texture2D" uid="uid://bxeun040s0sv8" path="res://assets/Apple.png" id="2_5dlni"]
+[ext_resource type="Script" uid="uid://do1xcx3vktr1b" path="res://share/movement.gd" id="3_7lgnp"]
+[ext_resource type="AudioStream" uid="uid://coqcg1ux51j0c" path="res://assets/sfx/sfx_gmtk26_tcbf_Cooking_food_lp.wav" id="4_owuyi"]
+[ext_resource type="Shader" uid="uid://cqbou358ry6hh" path="res://scenes/igredient/igredient.gdshader" id="5_5dlni"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uwoax"]
+radius = 38.052597
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ya4ey"]
+load_path = "res://.godot/imported/Apple.png-14d984b84fed4b2f99a523888dca7972.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7lgnp"]
+resource_local_to_scene = true
+shader = ExtResource("5_5dlni")
+shader_parameter/image_texture = SubResource("CompressedTexture2D_ya4ey")
+
+[node name="Igredient" type="CharacterBody2D" unique_id=577785402 node_paths=PackedStringArray("movement_manager", "audio")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_ayrya")
+cook_radius = 25
+movement_manager = NodePath("MovementComponent")
+audio = NodePath("AudioStreamPlayer2D")
+metadata/_custom_type_script = "uid://b4mannsakrc5q"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1311680931]
+visible = false
+texture = ExtResource("2_5dlni")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1888395183]
+position = Vector2(96, 88)
+shape = SubResource("CircleShape2D_uwoax")
+
+[node name="MovementComponent" type="Node" parent="." unique_id=956263449 node_paths=PackedStringArray("body")]
+script = ExtResource("3_7lgnp")
+body = NodePath("..")
+metadata/_custom_type_script = "uid://do1xcx3vktr1b"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=823515548]
+stream = ExtResource("4_owuyi")
+volume_db = 5.473
+max_distance = 509.0
+attenuation = 3.3635848
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1002749723]
+material = SubResource("ShaderMaterial_7lgnp")
+offset_right = 192.0
+offset_bottom = 192.0
+metadata/_edit_use_anchors_ = true

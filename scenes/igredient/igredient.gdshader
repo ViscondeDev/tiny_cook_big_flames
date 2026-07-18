@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 uniform sampler2D image_texture : filter_nearest;
+uniform sampler2D cooked_variant : filter_nearest;
 uniform sampler2D heatmap_texture;
 
 void vertex() {
@@ -8,12 +9,11 @@ void vertex() {
 }
 
 void fragment() {
-	COLOR = texture(image_texture, UV);
-	
+	vec4 original_color = texture(image_texture, UV);
+	vec4 cooked_color = texture(cooked_variant, UV);
 	vec4 heatmap_color = texture(heatmap_texture, UV);
-	if (heatmap_color.a > .0f) {
-		COLOR.r += 1.0 - heatmap_color.r;
-	}
+	
+	COLOR = mix(cooked_color, original_color, heatmap_color.r);
 }
 
 //void light() {
